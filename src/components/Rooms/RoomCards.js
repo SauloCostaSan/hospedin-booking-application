@@ -1,14 +1,13 @@
-import React, { useState } from "react";
-import { goRoom } from "../../routes/navigate";
+import React, { useState, useContext } from "react";
 
-import { getRooms } from "../../services/getRooms";
-
+import { GlobalContext } from "../../contexts/GlobalContext";
+import { getRooms } from "../../services/request";
+import { roomPayment } from "../../routes/navigate";
 import { Amenities } from "./Amenities";
 import { Button } from "../User/Button";
 
 import { InitialCards } from "./InitialCards";
 import "react-datepicker/dist/react-datepicker.css";
-
 
 import * as Gl from "../../generalStyled/variables";
 import * as St from "./styled";
@@ -20,31 +19,33 @@ import calendar from "../../assets/images/svg/calendar-icon.svg";
 import { useNavigate } from "react-router-dom";
 
 export const RoomCards = () => {
-  const [beginDate, setBeginDate] = useState();
-  const [endDate, setEndDate] = useState();
-  const setPriceRoom = useState();
+  const navigate = useNavigate();
+  const { states, setters } = useContext(GlobalContext);
+  const [ checkIn, checkOut, priceRoom] = states;
+  const [ setCheckIn, setCheckOut, setPriceRoom ] = setters;
 
   const [rooms, setRooms] = useState([]);
-  const [isLoading, setIsLoading ] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [itemSelected, setItemSelected] = useState("");
   const [showMoreInfo, setShowMoreInfo] = useState(false);
   const [changeArrow, setChangeArrow] = useState(false);
   const [changeText, setChangeText] = useState(false);
-  const navigate = useNavigate();
 
-  const formatDate = (date) => Intl.DateTimeFormat("fr-CA").format(date);
-  const goRoom = (nameRoom, priceRoom) => {
+  const showRooms = (date) => {
+    const formatDateCheckIn = Intl.DateTimeFormat("fr-CA").format(date);
+    const formatDateCheckOut = Intl.DateTimeFormat("fr-CA").format(date);
+    setCheckOut(checkOut);
+    setIsLoading(true);
+    getRooms(setRooms, setIsLoading);
+  }
+
+  const roomPayment = (nameRoom, priceRoom) => {
     setPriceRoom(priceRoom);
     routePayment(navigate, nameRoom);
-  }
-   const showRooms = (date) => {
-    setEndDate(date);
-    getRooms(setRooms, setIsLoading);
-
-  }
+  };
 
   const moreInfos = (itemId) => {
-    setShowMoreInfo(prevState => !prevState);
+    setShowMoreInfo((prevState) => !prevState);
     setChangeArrow((prevState) => !prevState);
     setChangeText((prevState) => !prevState);
     setItemSelected(itemId);
@@ -66,7 +67,7 @@ export const RoomCards = () => {
             <St.TextRoom>{room.occupation}</St.TextRoom>
           </St.Capacity>
           <St.ReserveBtn>
-            <Button onClick={() => goRoom(room.name, room.amount)} />
+            <Button onClick={() => roomPayment(room.name, room.amount)} />
           </St.ReserveBtn>
           <St.CardFooter>
             {showMoreInfo && itemSelected === index && (
@@ -88,7 +89,13 @@ export const RoomCards = () => {
             <St.Expand onClick={() => moreInfos(index)}>
               <St.IconInfo src={changeArrow ? arrowUp : arrowDown} />
               <Gl.SmallText
-              onClick={changeText ? <Gl.Text>Menos Informações</Gl.Text> : <Gl.Text>Mais Informações</Gl.Text>}
+                onClick={
+                  changeText ? (
+                    <Gl.Text>Menos Informações</Gl.Text>
+                  ) : (
+                    <Gl.Text>Mais Informações</Gl.Text>
+                  )
+                }
               />
             </St.Expand>
           </St.CardFooter>
@@ -105,21 +112,21 @@ export const RoomCards = () => {
           <St.Dates>
             <St.DateInput>
               <St.Picker
-                selected={beginDate}
+                selected={checkIn}
                 minDate={new Date()}
-                maxDate={endDate}
-                onChange={(date) => setBeginDate(date)}
-                dateFormat="MMM dd, yyyy"
+                maxDate={checkOut}
+                onChange={(date) => setCheckIn(date)}
+                dateFormat={formatDateCheckIn}
                 placeholderText="Check in"
               />
             </St.DateInput>
             <St.DivisionDate />
             <St.DateInput>
               <St.Picker
-                selected={endDate}
-                minDate={beginDate}
-                onChange={ date => showRooms(date)}
-                dateFormat="MMM dd, yyyy"
+                selected={checkOut}
+                minDate={checkIn}
+                onChange={(date) => showRooms(date)}
+                dateFormat= {formatDateCheckOut}
                 placeholderText="Check out"
               />
             </St.DateInput>

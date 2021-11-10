@@ -1,13 +1,25 @@
-import React from "react";
+import React, { useContext } from "react";
 // import { Link } from "react-router-dom";
 import { H2 } from "../generalStyled/variables";
 import { Btn } from "../components/User/styled";
 import * as St from "./styled";
 
 import card from "../assets/images/svg/card-icon.svg";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
+import { GlobalContext } from "../contexts/GlobalContext";
+import { GlobalState } from "../contexts/GlobalState";
+import { concludedBooking } from "../routes/navigate";
 
 export const Payment = () => {
+  const params = useParams();
+  const navigate = useNavigate();
+  const { states } = useContext(GlobalContext);
+  const {checkIn,checkOut, priceRoom} = states;
+
+  const onSubmitForm = (e) => {
+    e.preventDefault()
+    concludedBooking(navigate)
+  }
       return (
       <>
         <St.SectionPayment>
@@ -18,13 +30,13 @@ export const Payment = () => {
                 <St.FormPersonalText>
                   Nome completo<b>*</b>
                 </St.FormPersonalText>
-                <St.Input type="text" />
+                <St.Input type="name" required/>
               </St.FormPersonal>
               <St.FormPersonal>
                 <St.FormPersonalText>
                   E-mail<b>*</b>
                 </St.FormPersonalText>
-                <St.Input type="email" />
+                <St.Input type="email" placeholder="contact@email.com" required/>
               </St.FormPersonal>
             </St.PersonalData>
             <St.CardData>
@@ -38,26 +50,28 @@ export const Payment = () => {
                 <St.FormCardText>Número do cartão *</St.FormCardText>
                 <St.InputNumber>
                   <St.IconCard src={card} />
-                  <St.InputCard type="text" />
+                  <St.InputCard type="number" placeholder="0000 0000 0000 0000" required />
                 </St.InputNumber>
                 <St.GridForm>
                   <St.FormCard>
                     <St.FormCardText>Titular do cartão *</St.FormCardText>
-                    <St.HolderInput type="text" />
+                    <St.HolderInput type="name" required />
                   </St.FormCard>
                   <St.FormCard>
                     <St.FormCardText>Validade *</St.FormCardText>
-                    <St.ValidityInput type="text" />
+                    <St.ValidityInput type="text" placeholder="00/00" required/>
                   </St.FormCard>
                   <St.FormCard>
                     <St.FormCardText>CVC *</St.FormCardText>
-                    <St.CVCInput type="number" />
+                    <St.CVCInput type="password" placeholder="000" required/>
                   </St.FormCard>
                 </St.GridForm>
                 <St.FormCardSelect>
                   <St.FormCardText>Número de parcelas</St.FormCardText>
                   <St.SelectCard name="Selecione o número de parcelas">
-                    <St.OptionCard>1x</St.OptionCard>
+                    <St.OptionCard>1</St.OptionCard>
+                    <St.OptionCard>2</St.OptionCard>
+                    <St.OptionCard>3</St.OptionCard>
                   </St.SelectCard>
                 </St.FormCardSelect>
               </St.CardNumber>
@@ -88,8 +102,8 @@ export const Payment = () => {
             <St.PriceResume>
               <St.TitlePrice>Resumo do preço</St.TitlePrice>
               <St.ResumeValue>
-                <St.TextPrice>Suíte premium</St.TextPrice>
-                <St.TextPrice>180,00</St.TextPrice>
+                <St.TextPrice>{params.id}</St.TextPrice>
+                <St.TextPrice>{priceRoom && priceRoom.tofixed(3)}</St.TextPrice>
               </St.ResumeValue>
               <St.FinalPrice>
                 <St.Price>
@@ -98,11 +112,11 @@ export const Payment = () => {
                     (para todos os hóspedes)
                   </St.TextPriceItalic>
                 </St.Price>
-                <St.PriceValue>R$ 180,00</St.PriceValue>
+                <St.PriceValue>R$ {priceRoom && priceRoom.tofixed(3)}</St.PriceValue>
               </St.FinalPrice>
             </St.PriceResume>
             <St.ConcludeReserve>
-              <Btn to="/concluded">Concluir reserva</Btn>
+              <Btn type="submit">Concluir reserva</Btn>
             </St.ConcludeReserve>
           </St.Resume>
         </St.SectionPayment>
