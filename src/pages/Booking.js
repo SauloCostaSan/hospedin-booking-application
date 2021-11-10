@@ -1,7 +1,9 @@
 import React, { Component } from "react";
+import { HotelDetails } from "../components/Home/HotelDetails";
+import { RoomCards } from "../components/Rooms/RoomCards";
+
 import { PageReserve } from "./styled";
 
-import { HotelDetails } from "../components/Home/HotelDetails";
 
 export class Booking extends Component {
   render() {
@@ -9,6 +11,7 @@ export class Booking extends Component {
       <>
         <PageReserve>
           <HotelDetails />
+          <RoomCards />
         </PageReserve>
       </>
     );
