@@ -1,14 +1,14 @@
-import React, { Component } from "react";
+import React from "react";
 // import { Link } from "react-router-dom";
 import { H2 } from "../generalStyled/variables";
 import { Btn } from "../components/User/styled";
 import * as St from "./styled";
 
 import card from "../assets/images/svg/card-icon.svg";
+import { useNavigate } from "react-router";
 
-export class Payment extends Component {
-  render() {
-    return (
+export const Payment = () => {
+      return (
       <>
         <St.SectionPayment>
           <St.Data>
@@ -109,4 +109,3 @@ export class Payment extends Component {
       </>
     );
   }
-}

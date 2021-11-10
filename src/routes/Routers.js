@@ -7,11 +7,12 @@ import { Payment } from "../pages/Payment";
 import { Booking } from "../pages/Booking";
 
 export function Routers() {
+
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Booking />}></Route>
-        <Route path="/payment" element={<Payment />}>
+        <Route path="/payment:id" element={<Payment />}>
         </Route>
         <Route exact path="/concluded" element={<Concluded />}></Route>
       </Routes>

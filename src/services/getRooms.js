@@ -1,5 +1,9 @@
-import request from "request";
+import axios from "axios";
+import { api } from "../constants/api";
 
-const getRooms = (beginDate, endDate) =>
-  request.get(`/rooms?begin_date=${beginDate}&end_date=${endDate}`);
-export { getRooms };
+export const getRooms = (setData, setIsLoading) => {
+  setIsLoading(true);
+  axios.get(api).then((res) => { setData(res.data), setIsLoading(false)
+  })
+  .catch((err) => { console.log(err), setIsLoading(false)})
+}
