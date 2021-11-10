@@ -1,10 +1,10 @@
 import React from "react";
 import { CommodityDetails } from "./ComodityDetails";
 
-import * as Gl from "../../gerenalStyles/variables";
+import * as Gl from "../../generalStyled/variables";
 import * as St from "./styled";
 
-import mapIcon from "../../../images/svg/map-icon.svg";
+import mapIcon from "../../assets/images/svg/map-icon.svg";
 
 export const HotelDetails = () => {
     return (

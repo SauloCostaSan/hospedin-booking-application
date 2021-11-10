@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
 import styled from "styled-components";
-import { variable } from "../../gerenalStyles/variables";
+import { variable } from "../../generalStyled/variables";
 
 
 export const Btn = styled(Link)`

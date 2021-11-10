@@ -1,9 +1,9 @@
 import styled from "styled-components";
 
-import { variable, Text, Container } from "../../gerenalStyles/variables";
+import { variable, Text, Container } from "../../generalStyled/variables";
 
 import map from "../../assets/images/map.png";
-import arrowDown from "../../assets/images/svg/arrow-dow-icon";
+// import arrowDown from "../../assets/images/svg/arrow-dow-icon";
 
 export const Inn = styled.section`
   display: grid;
