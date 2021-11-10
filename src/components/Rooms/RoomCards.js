@@ -1,8 +1,7 @@
 import React, { useState, useContext } from "react";
-
 import { GlobalContext } from "../../contexts/GlobalContext";
-import { getRooms } from "../../services/request";
-import { roomPayment } from "../../routes/navigate";
+import { getRooms } from "../../services/getRooms";
+import { routePayment } from "../../routes/navigate";
 import { Amenities } from "./Amenities";
 import { Button } from "../User/Button";
 
@@ -21,29 +20,27 @@ import { useNavigate } from "react-router-dom";
 export const RoomCards = () => {
   const navigate = useNavigate();
   const { states, setters } = useContext(GlobalContext);
-  const [ checkIn, checkOut, priceRoom] = states;
-  const [ setCheckIn, setCheckOut, setPriceRoom ] = setters;
+  const { checkIn, checkOut} = states;
+  const { setCheckIn, setCheckOut, setPriceRoom } = setters;
 
   const [rooms, setRooms] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [itemSelected, setItemSelected] = useState("");
+  const [itemSelected, setItemSelected] = useState('');
   const [showMoreInfo, setShowMoreInfo] = useState(false);
   const [changeArrow, setChangeArrow] = useState(false);
   const [changeText, setChangeText] = useState(false);
 
-  const showRooms = (date) => {
-    const formatDateCheckIn = Intl.DateTimeFormat("fr-CA").format(date);
-    const formatDateCheckOut = Intl.DateTimeFormat("fr-CA").format(date);
-    setCheckOut(checkOut);
+  const ShowRooms = (date) => {
+    setCheckOut(date);
     setIsLoading(true);
     getRooms(setRooms, setIsLoading);
   }
+  // const formatDate = (date) => Intl.DateTimeFormat("fr-CA").format(date);
 
   const roomPayment = (nameRoom, priceRoom) => {
     setPriceRoom(priceRoom);
-    routePayment(navigate, nameRoom);
-  };
-
+    routePayment(navigate, nameRoom)
+  }
   const moreInfos = (itemId) => {
     setShowMoreInfo((prevState) => !prevState);
     setChangeArrow((prevState) => !prevState);
@@ -116,7 +113,7 @@ export const RoomCards = () => {
                 minDate={new Date()}
                 maxDate={checkOut}
                 onChange={(date) => setCheckIn(date)}
-                dateFormat={formatDateCheckIn}
+                dateFormat="MMM dd, yyyy"
                 placeholderText="Check in"
               />
             </St.DateInput>
@@ -125,8 +122,8 @@ export const RoomCards = () => {
               <St.Picker
                 selected={checkOut}
                 minDate={checkIn}
-                onChange={(date) => showRooms(date)}
-                dateFormat= {formatDateCheckOut}
+                onChange={(date) => ShowRooms(date)}
+                dateFormat= "MMM dd, yyyy"
                 placeholderText="Check out"
               />
             </St.DateInput>
@@ -142,7 +139,7 @@ export const RoomCards = () => {
             <St.TitlePrice>Preço por noite</St.TitlePrice>
             <St.TitleCapacity>Capacidade</St.TitleCapacity>
           </St.Room>
-          {isLoading ? CardDetail : <InitialCards />}
+          {isLoading ? <InitialCards /> :  CardDetail }
         </St.SectionRooms>
       </St.ContainerReserve>
     </St.HotelDates>

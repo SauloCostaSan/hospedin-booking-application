@@ -11,8 +11,8 @@ export function Routers() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Booking />}></Route>
-        <Route path="/payment:id" element={<Payment />}>
+        <Route exact path="/" element={<Booking />}></Route>
+        <Route exact path="/payment:id" element={<Payment />}>
         </Route>
         <Route exact path="/concluded" element={<Concluded />}></Route>
       </Routes>
