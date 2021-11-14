@@ -262,6 +262,7 @@ export const Sucess = styled.div`
   flex-direction: column;
   padding-top: 120px;
 `;
+export const Illustration = styled.img``;
 export const TitleSucess = styled(H2)`
   padding-top: 40px;
 `;
