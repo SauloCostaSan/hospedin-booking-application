@@ -1,46 +1,53 @@
 import React, { useState, useContext } from "react";
-import { GlobalContext } from "../../contexts/GlobalContext";
+import { useNavigate } from "react-router-dom";
+import ptBR from "date-fns/locale/pt-BR";
+
 import { getRooms } from "../../services/getRooms";
-import { routePayment } from "../../routes/navigate";
+import { GlobalContext } from "../../contexts/GlobalContext";
+
 import { Amenities } from "./Amenities";
-import { Button } from "../User/Button";
-
 import { InitialCards } from "./InitialCards";
-import "react-datepicker/dist/react-datepicker.css";
 
+import "react-datepicker/dist/react-datepicker.css";
 import * as Gl from "../../generalStyled/variables";
 import * as St from "./styled";
 
 import users from "../../assets/images/svg/users-icon.svg";
 import arrowDown from "../../assets/images/svg/arrow-down-icon.svg";
 import arrowUp from "../../assets/images/svg/arrow-up-icon.svg";
-import calendar from "../../assets/images/svg/calendar-icon.svg";
-import { useNavigate } from "react-router-dom";
 
 export const RoomCards = () => {
   const navigate = useNavigate();
   const { states, setters } = useContext(GlobalContext);
-  const { checkIn, checkOut} = states;
+  const { checkIn, checkOut } = states;
   const { setCheckIn, setCheckOut, setPriceRoom } = setters;
 
+  const [renderRooms, setRenderRooms] = useState(false);
   const [rooms, setRooms] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [itemSelected, setItemSelected] = useState('');
+  const [itemSelected, setItemSelected] = useState("");
   const [showMoreInfo, setShowMoreInfo] = useState(false);
   const [changeArrow, setChangeArrow] = useState(false);
   const [changeText, setChangeText] = useState(false);
 
-  const ShowRooms = (date) => {
-    setCheckOut(date);
-    setIsLoading(true);
-    getRooms(setRooms, setIsLoading);
-  }
-  // const formatDate = (date) => Intl.DateTimeFormat("fr-CA").format(date);
+  const onChangeCalendar = (dates) => {
+    const [checkIn, checkOut] = dates;
+    setCheckIn(checkIn);
+    setCheckOut(checkOut);
+  };
 
-  const roomPayment = (nameRoom, priceRoom) => {
-    setPriceRoom(priceRoom);
-    routePayment(navigate, nameRoom)
+  const dateInitialFormatted = (date) =>
+    Intl.DateTimeFormat("fr-CA").format(date);
+
+  async function showRooms() {
+    let response = await getRooms(
+      dateInitialFormatted(checkIn),
+      dateInitialFormatted(checkOut)
+    );
+    console.log(response);
+    setRooms(response.data);
+    setRenderRooms(true);
   }
+
   const moreInfos = (itemId) => {
     setShowMoreInfo((prevState) => !prevState);
     setChangeArrow((prevState) => !prevState);
@@ -57,14 +64,22 @@ export const RoomCards = () => {
             <St.TextRoom>{room.name}</St.TextRoom>
           </St.TypeRoom>
           <St.PriceRoom>
-            <St.TextRoom>R$ {room.amount.toFixed(3)}</St.TextRoom>
+            <St.TextRoom>R$ {room.amount}</St.TextRoom>
           </St.PriceRoom>
           <St.Capacity>
             <St.IconCap src={users} />
             <St.TextRoom>{room.occupation}</St.TextRoom>
           </St.Capacity>
           <St.ReserveBtn>
-            <Button onClick={() => roomPayment(room.name, room.amount)} />
+            <Gl.Btn
+              onClick={() =>
+                navigate(
+                  `/payment/${room.name}/${room.amount}/${checkIn}/${checkOut}`
+                )
+              }
+            >
+              Reservar
+            </Gl.Btn>
           </St.ReserveBtn>
           <St.CardFooter>
             {showMoreInfo && itemSelected === index && (
@@ -85,15 +100,11 @@ export const RoomCards = () => {
             )}
             <St.Expand onClick={() => moreInfos(index)}>
               <St.IconInfo src={changeArrow ? arrowUp : arrowDown} />
-              <Gl.SmallText
-                onClick={
-                  changeText ? (
-                    <Gl.Text>Menos Informações</Gl.Text>
-                  ) : (
-                    <Gl.Text>Mais Informações</Gl.Text>
-                  )
-                }
-              />
+              {changeText ? (
+                <Gl.SmallText>Menos Informações</Gl.SmallText>
+              ) : (
+                <Gl.SmallText>Mais Informações</Gl.SmallText>
+              )}
             </St.Expand>
           </St.CardFooter>
         </St.Room>
@@ -109,27 +120,39 @@ export const RoomCards = () => {
           <St.Dates>
             <St.DateInput>
               <St.Picker
+                locale={ptBR}
                 selected={checkIn}
                 minDate={new Date()}
                 maxDate={checkOut}
-                onChange={(date) => setCheckIn(date)}
-                dateFormat="MMM dd, yyyy"
+                onChange={(date) => {
+                  setCheckIn(date);
+                }}
+                dateFormat=" eee, dd MMM "
                 placeholderText="Check in"
               />
             </St.DateInput>
             <St.DivisionDate />
             <St.DateInput>
               <St.Picker
+                locale={ptBR}
                 selected={checkOut}
                 minDate={checkIn}
-                onChange={(date) => ShowRooms(date)}
-                dateFormat= "MMM dd, yyyy"
+                onChange={(date) => setCheckOut(date)}
+                onCalendarClose={() => showRooms()}
+                dateFormat=" eee, dd MMM "
                 placeholderText="Check out"
               />
             </St.DateInput>
-            <St.CalendarBox>
-              <St.Calendar src={calendar} />
-            </St.CalendarBox>
+            <St.PickerCalendar
+              locale={ptBR}
+              selected={checkIn}
+              onChange={onChangeCalendar}
+              onCalendarClose={() => showRooms()}
+              startDate={checkIn}
+              endDate={checkOut}
+              selectsRange
+              // inline
+            />
           </St.Dates>
         </St.ReserveDate>
         <St.Division />
@@ -139,7 +162,7 @@ export const RoomCards = () => {
             <St.TitlePrice>Preço por noite</St.TitlePrice>
             <St.TitleCapacity>Capacidade</St.TitleCapacity>
           </St.Room>
-          {isLoading ? <InitialCards /> :  CardDetail }
+          {renderRooms ? CardDetail : <InitialCards />}
         </St.SectionRooms>
       </St.ContainerReserve>
     </St.HotelDates>
