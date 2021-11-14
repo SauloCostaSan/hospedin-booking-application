@@ -1,9 +1,8 @@
 import styled from "styled-components";
 
-import { variable, Text, Container } from "../../generalStyled/variables";
+import { variable, Text, SmallExpand } from "../../generalStyled/variables";
 
 import map from "../../assets/images/map.png";
-// import arrowDown from "../../assets/images/svg/arrow-dow-icon";
 
 export const Inn = styled.section`
   display: grid;
@@ -15,7 +14,25 @@ export const InnInformation = styled.div`
   /* padding-right: 121px; */
 `;
 export const InnDescription = styled(Text)`
-  padding-top: 8px;
+  /* padding-top: 8px; */
+`;
+export const DetailsText = styled.span`
+  color: ${variable.colors.blueTexts};
+  font-family: ${variable.fonts.roboto};
+  font-weight: ${variable.fontWeight[0]};
+  font-size: ${variable.fontSize[2]};
+  line-height: ${variable.lineHeight[1]};
+`;
+export const ExpandBtn = styled.button`
+display: flex;
+align-items: center;
+border: none;
+background-color: unset;
+cursor: pointer;
+padding-top: 8px;
+`;
+export const ExpandText = styled(SmallExpand)`
+  text-decoration: underline;
 `;
 export const Commodity = styled.div`
   padding-top: 32px;
