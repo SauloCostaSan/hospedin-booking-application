@@ -8,3 +8,5 @@
 * Resumo do quarto selecionado, as datas e horários de check in e check out.
 * Mensagem de conclusão da reserva.
 
+### Acesse a aplicação através do link abaixo:
+https://hospedin-saulo-santana.netlify.app/
