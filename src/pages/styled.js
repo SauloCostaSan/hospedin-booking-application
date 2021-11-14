@@ -1,26 +1,29 @@
 import styled from "styled-components";
-import { variable, H2, Text, Container } from "../generalStyled/variables";
+import { variable, H2, Text, Container, Btn } from "../generalStyled/variables";
 
+//booking page style
 export const PageReserve = styled.main`
-  display:flex;
+  display: flex;
   flex-direction: column;
 `;
 
+//payment page styles
 export const SectionPayment = styled(Container)`
   padding-top: 80px;
   padding-bottom: 120px;
+  justify-content: space-between;
 `;
 export const Data = styled.form`
-  max-width: 463px;
-  max-height: 100%;
-  padding-right: 120px;
-`;
-export const PersonalData = styled.div`
-  flex-direction: column;
+  max-width: 960px;
   width: 100%;
+  display: flex;
+  justify-content: space-between;
 `;
+export const FormsContainer = styled.div``;
+export const PersonalData = styled.div``;
 export const TitlePersonal = styled(H2)`
   padding-bottom: 8px;
+
 `;
 export const FormPersonal = styled.div`
   &:last-child {
@@ -47,15 +50,17 @@ export const Input = styled.input`
   border: 1px solid ${variable.colors.borderColor};
   border-radius: ${variable.radius[0]};
   padding: 16px;
-  width: 100%;
-  box-sizing: border-box;
-
-`;
-export const CardData = styled.div`
   max-width: 463px;
   width: 100%;
-  display: flex;
+  box-sizing: border-box;
+  &::placeholder {
+    color: #bfc6d0;
+  }
+`;
+export const CardData = styled.div`
   flex-direction: column;
+  max-width: 463px;
+  width: 100%;
   padding-top: 48px;
 `;
 export const TextCard = styled(Text)`
@@ -70,6 +75,9 @@ export const InputNumber = styled.div`
   display: flex;
   align-items: center;
 `;
+export const IconCard = styled.img`
+  padding-left: 16px;
+`;
 export const InputCard = styled.input`
   background-color: ${variable.colors.white};
   color: ${variable.colors.borderColor};
@@ -80,9 +88,9 @@ export const InputCard = styled.input`
   padding: 16px;
   max-width: 463px;
   width: 90%;
-`;
-export const IconCard = styled.img`
-  padding-left: 16px;
+  &::placeholder {
+    color: #bfc6d0;
+  }
 `;
 export const GridForm = styled.div`
   max-width: 463px;
@@ -94,7 +102,6 @@ export const GridForm = styled.div`
     minmax(auto, 80px);
   gap: 16px;
 `;
-
 export const FormCard = styled.div`
   flex-direction: column;
 `;
@@ -116,16 +123,20 @@ export const HolderInput = styled.input`
   border: 1px solid ${variable.colors.borderColor};
   border-radius: ${variable.radius[0]};
   padding: 16px;
-  width: inherit;
+  width: 100%;
   box-sizing: border-box;
+  &::placeholder {
+    color: #bfc6d0;
+  }
 `;
 export const ValidityInput = styled(HolderInput)`
-max-width: 96px;
+  max-width: 96px;
 `;
 export const CVCInput = styled(HolderInput)`
-max-width: 80px;
+  max-width: 80px;
 `;
 export const FormCardSelect = styled.div`
+  max-width: 463px;
   width: 100%;
 `;
 export const SelectCard = styled.select`
@@ -151,8 +162,19 @@ export const OptionCard = styled.option`
   padding: 16px;
   width: 100%;
 `;
+export const Concluded = styled.div`
+  display: flex;
+`;
+export const ConcludeReserve = styled.div`
+  display: flex ;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: flex-start;
+`;
 export const Resume = styled.div`
-  height: 100%;
+  display: flex;
+  flex-direction: column;
+
 `;
 export const ReserveResume = styled.div`
   background-color: ${variable.colors.lightBlue};
@@ -168,14 +190,14 @@ export const TitleResume = styled.h4`
   color: ${variable.colors.blueTitles};
 `;
 export const Details = styled.div`
-
   &:first-child {
     padding-top: 8px;
   }
-  &:nth-child(3){
+  &:nth-child(3) {
     padding: 16px 0;
   }
 `;
+
 export const SubtitleResume = styled.p`
   font-family: ${variable.fonts.poppins};
   font-size: ${variable.fontSize[3]};
@@ -225,18 +247,18 @@ export const Price = styled.div`
 export const PriceValue = styled(TitleResume)`
   font-family: ${variable.fonts.roboto};
 `;
-export const ConcludeReserve = styled.div`
-  display: flex;
-  align-items: flex-end;
-  justify-content: flex-end;
-  padding-top: 181px;
+export const ButtonContainer = styled.div`
 `;
+export const BtnSubmit = styled(Btn)`
+margin-top: 205px;
+`;
+
+//booking completion page styles
 export const Sucess = styled.div`
   width: 100%;
   height: 100vh;
   display: flex;
   align-items: center;
-  /* justify-content: center; */
   flex-direction: column;
   padding-top: 120px;
 `;
@@ -248,3 +270,4 @@ export const TextSucess = styled(Text)`
   padding-top: 16px;
   text-align: center;
 `;
+
