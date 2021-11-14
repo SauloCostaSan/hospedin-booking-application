@@ -9,7 +9,7 @@ export class Concluded extends Component {
     return (
       <>
         <St.Sucess>
-          <img src={illustration} />
+          <St.Illustration src={illustration} />
           <St.TitleSucess>Sua reserva foi feita com sucesso!</St.TitleSucess>
           <St.TextSucess>
             Você receberá um e-mail com a confirmação e mais detalhes sobre sua
