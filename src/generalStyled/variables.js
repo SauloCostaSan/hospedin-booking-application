@@ -100,3 +100,18 @@ export const Container = styled.div`
     width: 960px;
   }
 `;
+
+export const Btn = styled.button`
+  background-color: ${variable.colors.orange};
+  color: ${variable.colors.blueTitles};
+  border: none;
+  border-radius: ${variable.radius[1]};
+  padding: 18px 24px;
+  font-family: ${variable.fonts.poppins};
+  font-size: ${variable.fontSize[3]} ;
+  line-height: ${variable.lineHeight[2]};
+  white-space: nowrap;
+  text-decoration: none;
+  cursor: pointer;
+`;
+
