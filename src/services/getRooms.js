@@ -1,4 +1,3 @@
-import axios from "axios";
 import { api } from "./request";
 
 export const getRooms =  async (checkIn, checkOut) => {
