@@ -20,7 +20,7 @@ export const RoomCards = () => {
   const navigate = useNavigate();
   const { states, setters } = useContext(GlobalContext);
   const { checkIn, checkOut } = states;
-  const { setCheckIn, setCheckOut, setPriceRoom } = setters;
+  const { setCheckIn, setCheckOut } = setters;
 
   const [renderRooms, setRenderRooms] = useState(false);
   const [rooms, setRooms] = useState([]);
