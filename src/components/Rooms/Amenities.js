@@ -6,9 +6,6 @@ import * as St from "./styled";
 import check from "../../assets/images/svg/fe-check-circle.svg";
 
 export class Amenities extends Component {
-  constructor(props) {
-    super(props);
-  }
 
   render() {
     console.log(this.props.data);
