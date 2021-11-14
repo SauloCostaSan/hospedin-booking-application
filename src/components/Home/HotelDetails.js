@@ -32,7 +32,7 @@ export const HotelDetails = () => {
               quartos dispõem de ar-condicionado, e o Wi-Fi { " " }
               {showDetails ? (
                 <St.DetailsText>
-                  de ótima qualidade edisponível em todas as dependências da
+                  de ótima qualidade e disponível em todas as dependências da
                   pousada, o melhor lugar para sua hospedagem na região.
                 </St.DetailsText>
               ) : (
