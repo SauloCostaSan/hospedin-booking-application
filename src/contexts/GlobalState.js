@@ -6,8 +6,8 @@ export const GlobalState = (props) => {
   const [checkOut, setCheckOut] = useState(null);
   const [priceRoom, setPriceRoom] = useState('');
 
-  const states = { checkIn, checkOut, priceRoom };
-  const setters = { setCheckIn, setCheckOut, setPriceRoom };
+  const states = { checkIn, checkOut};
+  const setters = { setCheckIn, setCheckOut};
 
   return (
     <GlobalContext.Provider value={{states, setters}}>
