@@ -38,6 +38,7 @@ export const RoomCards = () => {
   const dateInitialFormatted = (date) =>
     Intl.DateTimeFormat("fr-CA").format(date);
 
+  const priceFormatted = (amount) => amount.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'});
   async function showRooms() {
     try{
       let response = await getRooms(
@@ -67,7 +68,7 @@ export const RoomCards = () => {
             <St.TextRoom>{room.name}</St.TextRoom>
           </St.TypeRoom>
           <St.PriceRoom>
-            <St.TextRoom>R$ {room.amount}</St.TextRoom>
+            <St.TextRoom>{priceFormatted(room.amount)}</St.TextRoom>
           </St.PriceRoom>
           <St.Capacity>
             <St.IconCap src={users} />
@@ -77,7 +78,7 @@ export const RoomCards = () => {
             <Gl.Btn
               onClick={() =>
                 navigate(
-                  `/payment/${room.name}/${room.amount}/${checkIn}/${checkOut}`
+                  `/payment/${room.name}/${priceFormatted(room.amount)}/${checkIn}/${checkOut}`
                 )
               }
             >
