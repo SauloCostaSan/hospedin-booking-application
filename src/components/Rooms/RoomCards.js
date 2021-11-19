@@ -39,13 +39,16 @@ export const RoomCards = () => {
     Intl.DateTimeFormat("fr-CA").format(date);
 
   async function showRooms() {
-    let response = await getRooms(
-      dateInitialFormatted(checkIn),
-      dateInitialFormatted(checkOut)
-    );
-    console.log(response);
-    setRooms(response.data);
-    setRenderRooms(true);
+    try{
+      let response = await getRooms(
+        dateInitialFormatted(checkIn),
+        dateInitialFormatted(checkOut)
+      );
+      setRooms(response.data);
+      setRenderRooms(true);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   const moreInfos = (itemId) => {
