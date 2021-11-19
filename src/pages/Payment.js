@@ -15,7 +15,8 @@ export const Payment = () => {
   let checkOut = params.dateOut;
   let checkIn = params.dateIn;
 
-  const days = new Date(checkOut).getDate() - new Date(checkIn).getDate();
+  const days = Math.abs(new Date(checkOut) - new Date(checkIn));
+  const diffDays = Math.ceil( days / (1000 * 60 * 60 * 24));
 
   function dateFormatted(date) {
     return (
@@ -118,7 +119,7 @@ export const Payment = () => {
                     Duração total da hospedagem:{" "}
                   </St.SubtitleResume>
                   <St.TextResume>
-                    {days > 1 ? `${days} diárias` : `${days} diária`}
+                    {diffDays > 1 ? `${diffDays} diárias` : `${diffDays} diária`}
                   </St.TextResume>
                 </St.Details>
               </St.ReserveResume>
