@@ -126,7 +126,7 @@ export const Payment = () => {
                 <St.TitlePrice>Resumo do preço</St.TitlePrice>
                 <St.ResumeValue>
                   <St.TextPrice>{params.nameRoom}</St.TextPrice>
-                  <St.TextPrice>R$ {params.price}</St.TextPrice>
+                  <St.TextPrice>{params.price}</St.TextPrice>
                 </St.ResumeValue>
                 <St.FinalPrice>
                   <St.Price>
@@ -135,7 +135,7 @@ export const Payment = () => {
                       (para todos os hóspedes)
                     </St.TextPriceItalic>
                   </St.Price>
-                  <St.PriceValue>R$ {params.price}</St.PriceValue>
+                  <St.PriceValue>{params.price}</St.PriceValue>
                 </St.FinalPrice>
               </St.PriceResume>
             </St.Resume>
